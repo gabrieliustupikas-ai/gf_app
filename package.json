@@ -1,0 +1,24 @@
+{
+  "name": "roadclub-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspace apps/mobile -- --max-warnings=10",
+    "sync:core": "node scripts/sync-core.mjs",
+    "check:core-sync": "node scripts/sync-core.mjs --check",
+    "db:verify": "bash scripts/verify-migrations.sh",
+    "db:ranks": "node scripts/generate-ranks-sql.mjs > supabase/migrations/20261117000005_reference_ranks.sql",
+    "verify": "npm run check:core-sync && npm run typecheck && npm test && npm run lint && npm run db:verify",
+    "mobile": "npm run start --workspace apps/mobile",
+    "build:web": "npm run build:web --workspace apps/mobile"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
